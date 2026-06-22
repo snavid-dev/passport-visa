@@ -1,0 +1,32 @@
+# ============================================================
+# Iran Visa Processing System — .gitignore
+# ============================================================
+
+# Environment / secrets — NEVER commit
+.env
+.user.ini
+
+# Uploaded passport scans — local filesystem only
+/uploads/passports/*
+!/uploads/passports/.gitkeep
+
+# CodeIgniter writable dirs
+/application/cache/*
+!/application/cache/index.html
+!/application/cache/.htaccess
+/application/logs/*
+!/application/logs/index.html
+
+# CI3 session files (if file-based fallback ever used)
+/application/sessions/*
+
+# Composer
+/vendor/
+
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*~
+.idea/
+.vscode/

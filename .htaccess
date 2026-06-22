@@ -1,0 +1,31 @@
+# ============================================================
+# Iran Visa Processing System — Apache rewrite rules
+# Clean URLs: route everything through index.php (CodeIgniter 3)
+# ============================================================
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+
+    # Block direct access to the system + application folders
+    RewriteRule ^(system|application)/.* index.php/$0 [L]
+
+    # Serve existing files/directories directly (assets, uploads handled by their own rules)
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+
+    # Route everything else through the front controller
+    RewriteRule ^(.*)$ index.php?/$1 [L]
+</IfModule>
+
+<IfModule !mod_rewrite.c>
+    ErrorDocument 404 /index.php
+</IfModule>
+
+# Deny access to sensitive files
+<FilesMatch "(^\.env|^\.user\.ini|\.md|\.sql|composer\.(json|lock))$">
+    Require all denied
+</FilesMatch>
+
+# Disable directory listing
+Options -Indexes

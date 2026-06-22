@@ -1,0 +1,10 @@
+# Deny all direct web access to uploaded files.
+# Passport scans are served only through the authenticated Uploads controller.
+Require all denied
+Deny from all
+
+# Defensively prevent execution of any script that lands here
+<FilesMatch "\.(php|phtml|php3|php4|php5|php7|pl|py|cgi|sh)$">
+    Require all denied
+    Deny from all
+</FilesMatch>
