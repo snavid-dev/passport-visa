@@ -1,10 +1,43 @@
 # Session Log
 
 ## Current Phase
-Phase 1 — Scaffold & Foundation ✅ COMPLETE
+Phase 2 — Auth + Users + Roles ✅ COMPLETE
 
 ## Last Completed Task
-✅ Phase 1 — full foundation built and verified live on https://passport-visa.cyborgtech.co
+✅ Phase 2 — Users + Roles CRUD with RBAC, verified live
+
+## What was built (Phase 2)
+- Role_model: get_all (w/ permission_count + user_count subqueries, no N+1),
+  get_by_id, get_permission_ids, get_all_permissions, create/update with atomic
+  permission sync (trans), delete, is_in_use guard, name_exists
+- Roles controller (gated manage_roles): index/create/store/edit/update/delete,
+  validation, name-unique + in-use delete guard
+- Roles views: index (DataTable + delete guard for in-use roles),
+  form (permission checkbox grid + select-all toggle)
+- User_model extended: get_all (role join), get_by_id, create (bcrypt hash),
+  update (re-hash only if pw provided), delete, username_exists, count_active
+- Users controller (gated manage_users): full CRUD, self-delete + self-deactivate
+  guards, username-unique guard, password optional on edit
+- Users views: index (DataTable, status badges, self-row protected),
+  form (role select2, active switch, pw hint on edit)
+- Persian validation language override:
+  application/language/english/form_validation_lang.php (UI stays Persian-only)
+
+## Verified (Phase 2)
+- Auth guard: /users unauthed → 302 login
+- Permission guard: operator (no manage_users/roles) → 403 on /users & /roles, 200 dashboard
+- Sidebar hides admin section for users lacking the perms
+- Role create (happy path) → row + permissions persisted
+- User create (happy path) → bcrypt-hashed row persisted
+- Validation failure → form re-renders with PERSIAN errors, no DB write
+- Self-delete blocked (admin id=1 survives)
+- php -l clean on all new files; CI log clean (no new errors)
+- Test data cleaned up → back to 1 user (admin) + 1 role (مدیر کل)
+
+---
+
+## Phase 1 — Scaffold & Foundation ✅ COMPLETE (earlier)
+✅ full foundation built and verified live on https://passport-visa.cyborgtech.co
 
 ## What was built (Phase 1)
 - CodeIgniter 3.1.13 installed (system/, application/, index.php)
@@ -53,11 +86,10 @@ Phase 1 — Scaffold & Foundation ✅ COMPLETE
 - Web user is `www`; project owned navid:www, setgid, group-writable.
 
 ## Next Up
-Phase 2 — Auth + Users + Roles
-- Task #11 Auth: harden (already functional), add "remember"/password change
-- Task #12 Users CRUD + User_model (full)
-- Task #13 Roles CRUD + Role_model + assign permissions
-- Task #14 Permission-aware nav (sidebar already wired)
+Phase 3 — Core Data
+- Task #15 Accounts CRUD + Account_model (DataTables list, create/edit, delete)
+- Task #16 Services CRUD + Service_model
+- Task #17 Receipts CRUD + Receipt_model + Ledger_model (posts to ledger)
 
 ## Environment
 - PHP: 7.4.33 (php-fpm as www; CLI separate ini)
