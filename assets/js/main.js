@@ -81,6 +81,21 @@
   });
 
   /* ----------------------------------------------------------
+     Jalali datepicker — watches inputs with [data-jdp].
+     Outputs Shamsi (YYYY/MM/DD); server converts via from_jalali().
+  ---------------------------------------------------------- */
+  if (window.jalaliDatepicker) {
+    jalaliDatepicker.startWatch({
+      time: false,
+      persianDigit: false,   // Western digits per brief
+      showTodayBtn: true,
+      showEmptyBtn: true,
+      autoHide: true,
+      separatorChars: { date: '/' }
+    });
+  }
+
+  /* ----------------------------------------------------------
      AOS scroll reveals — init once globally.
   ---------------------------------------------------------- */
   if (window.AOS && !reducedMotion) {

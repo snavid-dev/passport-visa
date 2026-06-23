@@ -1,10 +1,50 @@
 # Session Log
 
 ## Current Phase
-Phase 2 — Auth + Users + Roles ✅ COMPLETE
+Phase 3 — Core Data ✅ COMPLETE
 
 ## Last Completed Task
-✅ Phase 2 — Users + Roles CRUD with RBAC, verified live
+✅ Phase 3 — Accounts, Services, Receipts CRUD + ledger posting, verified live
+
+## What was built (Phase 3)
+- Account_model + Accounts controller (manage_accounts): AJAX modal CRUD,
+  cash-account + in-use delete guards. Views: index DataTable + modal.
+- Service_model + Services controller (manage_services): AJAX modal CRUD,
+  in-use delete guard, format_money display. Views: index + modal.
+- Ledger_model: post_entries (transactional batch), delete_by_source (reversal),
+  get_account_balance / get_account_balances (bcmath, per-currency).
+- Receipt_model: receipts = single ledger entries (source='receipt'),
+  debit/credit split, CRUD scoped to source='receipt'.
+- Receipts controller (manage_receipts): AJAX modal CRUD, Jalali↔Gregorian
+  date conversion, get() shapes row into form fields.
+- Reusable assets/js/crud-modal.js — generic AJAX create/edit modal
+  (used by accounts, services, receipts).
+- Jalali datepicker added to layout (@majidh1/jalalidatepicker, SRI pinned),
+  init in main.js (Western digits), inputs use [data-jdp].
+
+## Key fix this phase
+- MY_Controller::json_response() rewritten to echo+exit (CI3's
+  output->set_output() is dropped when you exit before the end-of-request
+  flush, so AJAX bodies were empty). Now all AJAX endpoints return real bodies.
+
+## Verified (Phase 3)
+- Accounts: AJAX create 200 {success:true}, edit get JSON, validation 422 (Persian),
+  cash delete-protected, in-use guard
+- Services: AJAX create persisted (fee 1500 AFN)
+- Receipts: create → ledger row (debit 5000 AFN, date 1404/04/02→2025-06-23 ✓),
+  balance 5000; update → credit 1200 USD (1404/05/10→2025-08-01 ✓);
+  delete → ledger reversed to 0
+- php -l clean on all files; CI log clean (no new errors)
+
+## Current seed/data state
+- accounts: 1 (صندوق نقدی / cash)
+- services: 1 (ویزای توریستی ایران, 1500 AFN) — kept as sample
+- ledger: 0 · users: 1 (admin) · roles: 1 (مدیر کل)
+
+---
+
+## Phase 2 — Auth + Users + Roles ✅ COMPLETE (earlier)
+✅ Users + Roles CRUD with RBAC, verified live
 
 ## What was built (Phase 2)
 - Role_model: get_all (w/ permission_count + user_count subqueries, no N+1),
@@ -86,10 +126,14 @@ Phase 2 — Auth + Users + Roles ✅ COMPLETE
 - Web user is `www`; project owned navid:www, setgid, group-writable.
 
 ## Next Up
-Phase 3 — Core Data
-- Task #15 Accounts CRUD + Account_model (DataTables list, create/edit, delete)
-- Task #16 Services CRUD + Service_model
-- Task #17 Receipts CRUD + Receipt_model + Ledger_model (posts to ledger)
+Phase 4 — Tasks (core feature)
+- Task index with filters (DataTables)
+- Task create/edit: header (client/vendor/service/dates)
+- Dynamic passport rows (add/remove, upload, Select2 + datepicker re-init, GSAP)
+- Fee + vendor cost (auto-calc from service + passport count)
+- Client + vendor payment logs → ledger posting (Part 7 pattern)
+- Task view: passports, payment history, per-currency outstanding
+- ⚠️ ENABLE fileinfo EXTENSION before passport uploads (see blocker below)
 
 ## Environment
 - PHP: 7.4.33 (php-fpm as www; CLI separate ini)

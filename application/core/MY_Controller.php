@@ -114,11 +114,12 @@ class MY_Controller extends CI_Controller {
      */
     protected function json_response($payload, $status = 200)
     {
-        $this->output
-             ->set_status_header($status)
-             ->set_content_type('application/json', 'utf-8')
-             ->set_output(json_encode($payload));
-        // Stop further processing immediately.
+        // NOTE: we echo + exit rather than $this->output->set_output(), because
+        // exit; bypasses CI3's end-of-request output flush, which would send an
+        // empty body. set_status_header() and header() both emit immediately.
+        $this->output->set_status_header($status);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($payload);
         exit;
     }
 

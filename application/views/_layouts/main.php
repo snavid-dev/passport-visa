@@ -32,6 +32,8 @@
           integrity="sha384-ulbpmnIhSyJCRH6yLG2zh9HtW6LEZ39ZjgO1uEDyYCbISb5WXC9J9IXbQl4JA1m/" crossorigin="anonymous">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/datatables.net-buttons-bs5@2.4.2/css/buttons.bootstrap5.min.css"
           integrity="sha384-pZ0WBkZvjXVs+cznlKxzQDazHsf8DuyL4APQE+07UDMZa9yuEGDV7rSQDJ9r1TMh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@majidh1/jalalidatepicker@0.9.9/dist/jalalidatepicker.min.css"
+          integrity="sha384-bIPIyn7CFYB7JsdrgqPYWBmBe/xRP4Pr+ifh2QXUadBxxzWVXwiL2dXISkNXwcaD" crossorigin="anonymous">
 
     <!-- App CSS -->
     <link rel="stylesheet" href="<?= base_url('assets/css/glass-tokens.css') ?>">
@@ -73,6 +75,8 @@
         integrity="sha384-57StXIwAbLcC8X3+3CfIRofQ1D7rMggjdwLqpqUhBcl7m8JdVqKH6/9F0Sn9B2j5" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/datatables.net-buttons-bs5@2.4.2/js/buttons.bootstrap5.min.js"
         integrity="sha384-8Fm9OFhJ1epvcmDiJTZ2SFHHZoCp/xJ8Ld7wG7/aUwGni32fG7LIhsNTFfEtUaSv" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/@majidh1/jalalidatepicker@0.9.9/dist/jalalidatepicker.min.js"
+        integrity="sha384-2WXbgtBGqyoPm87f8XnLFs7M8S1qgCgWxxCDKq1E2UtWl1gP2qaKqLbLSQu0d6ge" crossorigin="anonymous"></script>
 
 <!-- App JS -->
 <script src="<?= base_url('assets/js/select2-init.js') ?>"></script>
