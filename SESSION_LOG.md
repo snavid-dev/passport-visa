@@ -1,10 +1,51 @@
 # Session Log
 
 ## Current Phase
-Phase 3 — Core Data ✅ COMPLETE
+Phase 4 — Tasks (core feature) ✅ COMPLETE
 
 ## Last Completed Task
-✅ Phase 3 — Accounts, Services, Receipts CRUD + ledger posting, verified live
+✅ Phase 4 — Tasks with passports, uploads, payments + ledger, verified live
+
+## What was built (Phase 4)
+- Task_model (filters + server-side pagination, joins, create/update,
+  delete with ledger reversal), Passport_model (row sync, scan paths),
+  Payment_model (client+vendor payments, transactional ledger posting per
+  Part 7, precise per-payment reversal).
+- Tasks controller (manage_tasks): index w/ filter bar + CI pagination,
+  create/store, edit/update, delete (+file cleanup), view, AJAX
+  add/delete client+vendor payments.
+- Uploads controller: auth-gated passport-scan serving (served via /scan/...).
+- upload_helper.php: content-based validation (getimagesize for images +
+  %PDF magic bytes — no fileinfo needed), GD resize to 1600px + JPEG 80%.
+- Views: tasks/index (filters), tasks/form (header + financial + dynamic
+  passport rows + per-row upload), tasks/view (passports, payment logs,
+  per-currency outstanding). task-form.js (dynamic rows, reindex, datepicker
+  re-init, GSAP, fee auto-calc), task-payments.js (AJAX payments).
+
+## Key fixes this phase
+- Scan serving URL must NOT collide with the physical /uploads path or Apache
+  serves it statically (then uploads/.htaccess denies). Route changed to
+  /scan/{task_id}/{file} → Uploads::passport (auth-checked).
+
+## Verified (Phase 4)
+- Task create (multipart) w/ passport + scan: dates 1404/04/15→2025-07-06,
+  dob 1370/05/10→1991-08-01; image resized 1800→1600px, compressed
+- Scan serving: 200 w/ session, 302→login without (auth gated)
+- Client payment 1000 AFN → 2 ledger rows (cash debit + client credit)
+- Vendor payment 800 AFN → 2 ledger rows (cash credit + vendor debit)
+- Balances: cash 200, client -1000, vendor 800 (all correct)
+- Payment delete → exact 2-row reversal; task delete → passports+payments+
+  ledger+scan-dir all removed
+- php -l clean; CI log clean (only external bot 404s)
+
+## ⚠️ Outstanding env item
+- fileinfo STILL not installed. Uploads work without it (getimagesize +
+  magic bytes), but enabling fileinfo is recommended hardening for Phase 6.
+
+---
+
+## Phase 3 — Core Data ✅ COMPLETE (earlier)
+✅ Accounts, Services, Receipts CRUD + ledger posting, verified live
 
 ## What was built (Phase 3)
 - Account_model + Accounts controller (manage_accounts): AJAX modal CRUD,
@@ -126,14 +167,12 @@ Phase 3 — Core Data ✅ COMPLETE
 - Web user is `www`; project owned navid:www, setgid, group-writable.
 
 ## Next Up
-Phase 4 — Tasks (core feature)
-- Task index with filters (DataTables)
-- Task create/edit: header (client/vendor/service/dates)
-- Dynamic passport rows (add/remove, upload, Select2 + datepicker re-init, GSAP)
-- Fee + vendor cost (auto-calc from service + passport count)
-- Client + vendor payment logs → ledger posting (Part 7 pattern)
-- Task view: passports, payment history, per-currency outstanding
-- ⚠️ ENABLE fileinfo EXTENSION before passport uploads (see blocker below)
+Phase 5 — Balance Sheet + 10 Reports
+- Balance_sheet controller (per-currency balances from ledger GROUP BY)
+- Report_model + Reports controller (10 reports): balance sheet,
+  account statement, cash position, income/expense, tasks, profit,
+  outstanding, client, vendor, passport/visa volume
+- Report query caching + EXPLAIN index checks
 
 ## Environment
 - PHP: 7.4.33 (php-fpm as www; CLI separate ini)

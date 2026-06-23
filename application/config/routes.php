@@ -63,6 +63,8 @@ $route['translate_uri_dashes'] = FALSE;
 $route['login']  = 'auth/login';
 $route['logout'] = 'auth/logout';
 
-// Authenticated file serving (passport scans)
-$route['uploads/passports/(:num)/(:any)'] = 'uploads/passport/$1/$2';
+// Authenticated file serving (passport scans).
+// NOTE: must NOT collide with the physical /uploads path, or Apache would
+// serve the file statically (and the uploads/.htaccess would deny it).
+$route['scan/(:num)/(:any)'] = 'uploads/passport/$1/$2';
 
