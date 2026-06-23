@@ -81,6 +81,12 @@ class Account_model extends CI_Model {
         return $this->db->affected_rows() > 0;
     }
 
+    /** Count of active accounts. @return int */
+    public function count_active()
+    {
+        return $this->db->where('active', 1)->count_all_results('financial_accounts');
+    }
+
     /**
      * Is this account referenced by any task or ledger entry? (delete guard)
      *

@@ -5,30 +5,27 @@
     <p class="text-secondary mb-0">به سیستم پردازش ویزای ایران خوش آمدید — امروز <?= jalali_today('l، j F Y') ?></p>
 </div>
 
+<?php if (! empty($cards)): ?>
 <div class="row g-3 mb-4">
-    <?php
-    $cards = array(
-        array('label' => 'وظایف باز',        'value' => '—', 'icon' => 'fa-list-check',     'grad' => 'linear-gradient(135deg,#4f46e5,#818cf8)'),
-        array('label' => 'حساب‌ها',          'value' => '—', 'icon' => 'fa-users',          'grad' => 'linear-gradient(135deg,#06b6d4,#22d3ee)'),
-        array('label' => 'موجودی صندوق (AFN)', 'value' => '—', 'icon' => 'fa-scale-balanced', 'grad' => 'linear-gradient(135deg,#10b981,#34d399)'),
-        array('label' => 'بدهی‌های معوق',     'value' => '—', 'icon' => 'fa-triangle-exclamation', 'grad' => 'linear-gradient(135deg,#f59e0b,#fbbf24)'),
-    );
-    foreach ($cards as $c): ?>
+    <?php foreach ($cards as $c): ?>
         <div class="col-12 col-sm-6 col-xl-3">
-            <div class="glass-card stat-card h-100">
-                <div class="d-flex justify-content-between align-items-start">
-                    <div>
-                        <div class="stat-card__label"><?= $c['label'] ?></div>
-                        <div class="stat-card__value num"><?= $c['value'] ?></div>
-                    </div>
-                    <div class="stat-card__icon" style="background: <?= $c['grad'] ?>;">
-                        <i class="fa-solid <?= $c['icon'] ?>"></i>
+            <a href="<?= base_url($c['link']) ?>" class="text-decoration-none">
+                <div class="glass-card stat-card h-100">
+                    <div class="d-flex justify-content-between align-items-start">
+                        <div>
+                            <div class="stat-card__label"><?= $c['label'] ?></div>
+                            <div class="stat-card__value num"><?= $c['value'] ?></div>
+                        </div>
+                        <div class="stat-card__icon" style="background: <?= $c['grad'] ?>;">
+                            <i class="fa-solid <?= $c['icon'] ?>"></i>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </a>
         </div>
     <?php endforeach; ?>
 </div>
+<?php endif; ?>
 
 <div class="glass-card p-4" data-aos="fade-up">
     <h3 class="h5 mb-2"><i class="fa-solid fa-rocket text-primary ms-1"></i> سیستم آماده است</h3>
