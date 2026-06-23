@@ -1,10 +1,44 @@
 # Session Log
 
 ## Current Phase
-Phase 5 — Balance Sheet + 10 Reports ✅ COMPLETE
+Phase 6 — Polish & Hardening ✅ COMPLETE — ALL 6 PHASES DONE 🎉
 
 ## Last Completed Task
-✅ Phase 5 — balance sheet + 10 reports, verified live with sample data
+✅ Phase 6 — security audit, indexing, report caching, regression — verified
+
+## What was done (Phase 6)
+- SECURITY AUDIT (all pass): no debug output, no raw superglobals, all user
+  output html_escape()'d, sensitive files (.env/.sql/.md/config/composer) → 403,
+  uploads → 403, all POST actions guarded.
+- CSRF FIX: csrf_cookie is HttpOnly (JS can't read it) + csrf_regenerate was TRUE
+  → AJAX retry/multi-submit would 403 in a real browser. Set csrf_regenerate=FALSE
+  (stable per-session token, still fully enforced); JS reads <meta csrf-hash>.
+  Verified two consecutive AJAX POSTs with same token succeed.
+- INDEXES: confirmed all required indexes exist; EXPLAIN balance sheet uses
+  idx_account_currency (ref, no filesort/scan).
+- REPORT CACHING: cache_on() in Balance_sheet + Reports controllers; bulletproof
+  invalidation via MY_Controller cache_delete_all() on ANY POST (even 422). Keeps
+  reports real-time. cachedir application/cache/db (777; non-web-accessible).
+- FULL REGRESSION (Protocol 5.6) all pass: login/session, AJAX CRUD, task+upload,
+  payments→4 ledger, auth-gated scan, balance sheet USD nets to 0.00, payment
+  reversal→2 left, CSRF in forms.
+- Responsive: viewport metas, breakpoints (992/575), mobile sidebar toggle,
+  table scroll wrappers (17 views), reduced-motion in CSS+JS.
+- php -l clean across the whole tree.
+
+## Known follow-ups (not blocking)
+- fileinfo: built + staged at /home/navid/fileinfo.so; run the 4 root cmds to
+  install (uploads work without it via getimagesize + magic bytes).
+- Visual 375px screenshot QA needs a real browser/device (structure is mobile-first
+  and complete).
+- Orphan upload files from direct-SQL test cleanup are owned by www (app-driven
+  task delete cleans files correctly).
+- Nothing pushed to GitHub remote yet (per user choice). git on dev branch.
+
+---
+
+## Phase 5 — Balance Sheet + 10 Reports ✅ COMPLETE (earlier)
+✅ balance sheet + 10 reports, verified live with sample data
 
 ## What was built (Phase 5)
 - Report_model: balance_sheet (per-currency pivot), account_statement +
@@ -204,12 +238,11 @@ Phase 5 — Balance Sheet + 10 Reports ✅ COMPLETE
 - Web user is `www`; project owned navid:www, setgid, group-writable.
 
 ## Next Up
-Phase 6 — Polish & Hardening
-- Mobile QA pass (375px), animation QA
-- Security audit: CSRF coverage, output escaping, upload dir protection
-- Performance: report query caching, EXPLAIN index verification
-- php -l sweep (done each phase), final regression checklist
-- Enable fileinfo (root cmds pending)
+All 6 build-order phases complete. Optional remaining work:
+- Push dev → GitHub remote (awaiting user go-ahead)
+- Install fileinfo (root cmds), then optional finfo cross-check in upload_helper
+- Manual visual QA at 375px/390px in a real browser + screenshots for PRs
+- dev → prod promotion per github_workflow.md when ready
 
 ## Environment
 - PHP: 7.4.33 (php-fpm as www; CLI separate ini)

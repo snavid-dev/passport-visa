@@ -14,6 +14,9 @@
 /application/cache/*
 !/application/cache/index.html
 !/application/cache/.htaccess
+!/application/cache/db
+/application/cache/db/*
+!/application/cache/db/index.html
 /application/logs/*
 !/application/logs/index.html
 

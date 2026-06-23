@@ -12,6 +12,8 @@ class Balance_sheet extends MY_Controller {
         parent::__construct();
         $this->require_permission('view_balance_sheet');
         $this->load->model('Report_model');
+        // Cache the balance-sheet aggregate; invalidated on any POST mutation.
+        $this->db->cache_on();
     }
 
     public function index()

@@ -51,6 +51,14 @@ class MY_Controller extends CI_Controller {
         // Make permission checks available to controllers + views.
         $this->load->library('permission');
         $this->permission->init($this->current_user);
+
+        // Report query cache invalidation (bulletproof): every mutation is a
+        // POST, so clearing the DB query cache at the start of any POST request
+        // guarantees the next read re-queries fresh data — keeping reports
+        // real-time while still benefiting from caching on GET reads.
+        if ($this->input->method() === 'post') {
+            $this->db->cache_delete_all();
+        }
     }
 
     // ------------------------------------------------------------------

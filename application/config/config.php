@@ -461,7 +461,12 @@ $config['csrf_protection'] = TRUE;
 $config['csrf_token_name'] = 'csrf_token';
 $config['csrf_cookie_name'] = 'csrf_cookie';
 $config['csrf_expire'] = 7200;
-$config['csrf_regenerate'] = TRUE;
+// FALSE: the CSRF cookie is HttpOnly (JS can't read it), so AJAX reads the
+// token from the <meta csrf-hash> tag. A per-request rotating token would
+// invalidate that meta after the first POST (breaking retry-after-422 and
+// multi-submit). A stable per-session token is still fully enforced on every
+// POST and is the correct trade-off for this AJAX-driven UI.
+$config['csrf_regenerate'] = FALSE;
 $config['csrf_exclude_uris'] = array();
 
 /*

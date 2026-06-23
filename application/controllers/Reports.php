@@ -11,6 +11,9 @@ class Reports extends MY_Controller {
         parent::__construct();
         $this->require_permission('view_reports');
         $this->load->model(array('Report_model', 'Account_model'));
+        // Cache the (read-only) report queries; invalidated on any POST mutation
+        // by MY_Controller's cache_delete_all().
+        $this->db->cache_on();
     }
 
     /** Report hub. */
