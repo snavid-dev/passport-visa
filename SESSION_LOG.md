@@ -1,10 +1,47 @@
 # Session Log
 
 ## Current Phase
-Phase 4 — Tasks (core feature) ✅ COMPLETE
+Phase 5 — Balance Sheet + 10 Reports ✅ COMPLETE
 
 ## Last Completed Task
-✅ Phase 4 — Tasks with passports, uploads, payments + ledger, verified live
+✅ Phase 5 — balance sheet + 10 reports, verified live with sample data
+
+## What was built (Phase 5)
+- Report_model: balance_sheet (per-currency pivot), account_statement +
+  opening_balance, cash_position, income_expense, tasks_summary, profit (+
+  per-task), outstanding (UNION client/vendor), client_report, vendor_report,
+  volume. bcmath throughout; currencies never converted.
+- Balance_sheet controller (view_balance_sheet) + Reports controller
+  (view_reports) with one method per report + Jalali date-range filters.
+- Views: balance_sheet/index, reports hub + 10 report views,
+  reusable _partials/date_filter.php.
+
+## Login fixes (this session)
+- Login form vanish FIXED: card had both .glass-card and .auth-card, so
+  main.js ran two gsap.from() on it (2nd captured the zeroed opacity as its
+  end → animated 0→0). Scoped generic anim to `.app-content .glass-card`.
+- Added default credentials box on login page (admin / admin@1234).
+
+## fileinfo
+- Built fileinfo.so from PHP 7.4.33 source (verified loads), staged at
+  /home/navid/fileinfo.so. Needs 4 root cmds to install (copy to ext dir,
+  uncomment ;extension=fileinfo in php.ini, reload php-fpm-74). Uploads work
+  without it regardless.
+
+## Verified (Phase 5)
+- Seeded task (fee 3000 AFN / cost 2000 AFN, 2 passports), client pay 1000,
+  vendor pay 800, income receipt 500 USD, expense receipt 300 AFN
+- Balance sheet totals: AFN 300.00, USD -500.00 (exact)
+- All 10 reports + balance sheet load 200 with correct figures
+  (cash 200, profit 1000, outstanding 2000/1200, client 3000/1000,
+   vendor 2000/800, income/expense 500/300, volume توریستی=2)
+- php -l clean; CI log clean (only external bot 404s)
+- Test data cleaned → pristine (cash account + 1 service + admin)
+
+---
+
+## Phase 4 — Tasks (core feature) ✅ COMPLETE (earlier)
+✅ Tasks with passports, uploads, payments + ledger, verified live
 
 ## What was built (Phase 4)
 - Task_model (filters + server-side pagination, joins, create/update,
@@ -167,12 +204,12 @@ Phase 4 — Tasks (core feature) ✅ COMPLETE
 - Web user is `www`; project owned navid:www, setgid, group-writable.
 
 ## Next Up
-Phase 5 — Balance Sheet + 10 Reports
-- Balance_sheet controller (per-currency balances from ledger GROUP BY)
-- Report_model + Reports controller (10 reports): balance sheet,
-  account statement, cash position, income/expense, tasks, profit,
-  outstanding, client, vendor, passport/visa volume
-- Report query caching + EXPLAIN index checks
+Phase 6 — Polish & Hardening
+- Mobile QA pass (375px), animation QA
+- Security audit: CSRF coverage, output escaping, upload dir protection
+- Performance: report query caching, EXPLAIN index verification
+- php -l sweep (done each phase), final regression checklist
+- Enable fileinfo (root cmds pending)
 
 ## Environment
 - PHP: 7.4.33 (php-fpm as www; CLI separate ini)

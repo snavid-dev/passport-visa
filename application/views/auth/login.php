@@ -29,4 +29,13 @@
             ورود
         </button>
     <?= form_close() ?>
+
+    <div class="app-alert app-alert--info mt-4 small" style="position:static">
+        <i class="fa-solid fa-circle-info"></i>
+        <span class="flex-grow-1">
+            اطلاعات ورود پیش‌فرض —
+            نام کاربری: <strong class="num">admin</strong> ·
+            رمز عبور: <strong class="num">admin@1234</strong>
+        </span>
+    </div>
 </div>

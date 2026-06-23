@@ -69,8 +69,12 @@
     if (document.querySelector('.app-topbar')) {
       gsap.from('.app-topbar', { y: -40, opacity: 0, duration: 0.5, ease: 'power3.out' });
     }
-    if (document.querySelector('.glass-card')) {
-      gsap.from('.glass-card', {
+    // Scope to content cards only — never the auth card, which has its own
+    // tween below. (A card matching BOTH selectors would get two gsap.from
+    // tweens; the second captures the already-zeroed opacity as its end value
+    // and animates 0→0, leaving the card invisible.)
+    if (document.querySelector('.app-content .glass-card')) {
+      gsap.from('.app-content .glass-card', {
         y: 32, opacity: 0, duration: 0.5,
         stagger: 0.08, ease: 'power3.out', delay: 0.1
       });
