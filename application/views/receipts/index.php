@@ -9,7 +9,7 @@ $account_types = ACCOUNT_TYPES;
         <p class="text-secondary mb-0 small">ثبت دستی بدهکار / بستانکار روی حساب‌ها (دفتر کل)</p>
     </div>
     <button type="button" class="btn btn-primary" data-crud-create>
-        <i class="fa-solid fa-plus ms-1"></i> ثبت رسید
+        <i class="fa-solid fa-plus me-1"></i> ثبت رسید
     </button>
 </div>
 
@@ -121,7 +121,7 @@ $account_types = ACCOUNT_TYPES;
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-glass" data-bs-dismiss="modal">انصراف</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-floppy-disk ms-1"></i> ذخیره
+                        <i class="fa-solid fa-floppy-disk me-1"></i> ذخیره
                     </button>
                 </div>
             </form>

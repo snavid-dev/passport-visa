@@ -9,7 +9,7 @@ $status_badge = array('open' => 'badge-info', 'completed' => 'badge-success', 'c
         <p class="text-secondary mb-0 small">مدیریت بسته‌های پاسپورت و پردازش ویزا (<?= (int) $total ?> مورد)</p>
     </div>
     <a href="<?= base_url('tasks/create') ?>" class="btn btn-primary">
-        <i class="fa-solid fa-plus ms-1"></i> افزودن وظیفه
+        <i class="fa-solid fa-plus me-1"></i> افزودن وظیفه
     </a>
 </div>
 

@@ -6,7 +6,7 @@ foreach ($rows as $r) { $grouped[$r->type][] = $r; }
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-up">
     <h2 class="h4 mb-0">گزارش ترازنامه</h2>
-    <a href="<?= base_url('reports') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right ms-1"></i> گزارشات</a>
+    <a href="<?= base_url('reports') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right me-1"></i> گزارشات</a>
 </div>
 <div class="glass-card glass-table-wrap" data-aos="fade-up">
     <table class="table glass-table align-middle" style="width:100%">

@@ -3,7 +3,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-up">
     <h2 class="h4 mb-0">وضعیت نقدینگی</h2>
-    <a href="<?= base_url('reports') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right ms-1"></i> گزارشات</a>
+    <a href="<?= base_url('reports') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right me-1"></i> گزارشات</a>
 </div>
 
 <div class="row g-3 mb-3">

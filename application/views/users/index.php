@@ -6,7 +6,7 @@
         <p class="text-secondary mb-0 small">مدیریت کاربران سیستم</p>
     </div>
     <a href="<?= base_url('users/create') ?>" class="btn btn-primary">
-        <i class="fa-solid fa-plus ms-1"></i> افزودن کاربر
+        <i class="fa-solid fa-plus me-1"></i> افزودن کاربر
     </a>
 </div>
 

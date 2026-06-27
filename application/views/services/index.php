@@ -6,7 +6,7 @@
         <p class="text-secondary mb-0 small">انواع خدمات ویزا و هزینه پیش‌فرض هر پاسپورت</p>
     </div>
     <button type="button" class="btn btn-primary" data-crud-create>
-        <i class="fa-solid fa-plus ms-1"></i> افزودن خدمت
+        <i class="fa-solid fa-plus me-1"></i> افزودن خدمت
     </button>
 </div>
 
@@ -98,7 +98,7 @@
                 <div class="modal-footer border-0">
                     <button type="button" class="btn btn-glass" data-bs-dismiss="modal">انصراف</button>
                     <button type="submit" class="btn btn-primary">
-                        <i class="fa-solid fa-floppy-disk ms-1"></i> ذخیره
+                        <i class="fa-solid fa-floppy-disk me-1"></i> ذخیره
                     </button>
                 </div>
             </form>

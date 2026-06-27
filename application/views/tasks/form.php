@@ -22,7 +22,7 @@ function render_passport_row($i, $p = NULL)
     ob_start(); ?>
     <div class="passport-row glass-panel--subtle p-3 mb-2" data-row>
         <div class="d-flex justify-content-between align-items-center mb-2">
-            <span class="fw-bold small"><i class="fa-solid fa-passport ms-1"></i> پاسپورت</span>
+            <span class="fw-bold small"><i class="fa-solid fa-passport me-1"></i> پاسپورت</span>
             <button type="button" class="btn btn-sm btn-glass text-danger remove-passport-row" title="حذف"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <input type="hidden" name="passport_rows[<?= $i ?>][id]" value="<?= $id ?>">
@@ -71,7 +71,7 @@ function render_passport_row($i, $p = NULL)
             <div class="col-12 col-md-4 d-flex align-items-end">
                 <?php if ($scan): ?>
                     <a href="<?= base_url('scan/' . (int) $p->task_id . '/' . basename($scan)) ?>" target="_blank" class="btn btn-sm btn-glass w-100">
-                        <i class="fa-solid fa-file-arrow-down ms-1"></i> مشاهده اسکن فعلی
+                        <i class="fa-solid fa-file-arrow-down me-1"></i> مشاهده اسکن فعلی
                     </a>
                 <?php endif; ?>
             </div>
@@ -84,7 +84,7 @@ function render_passport_row($i, $p = NULL)
 
 <div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-up">
     <h2 class="h4 mb-0"><?= $is_edit ? 'ویرایش وظیفه' : 'افزودن وظیفه' ?></h2>
-    <a href="<?= base_url('tasks') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right ms-1"></i> بازگشت</a>
+    <a href="<?= base_url('tasks') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right me-1"></i> بازگشت</a>
 </div>
 
 <?php if ($this->session->flashdata('error')): ?>
@@ -94,7 +94,7 @@ function render_passport_row($i, $p = NULL)
 
 <!-- Header -->
 <div class="glass-card p-4 mb-3" data-aos="fade-up">
-    <h3 class="h6 mb-3"><i class="fa-solid fa-circle-info text-primary ms-1"></i> اطلاعات وظیفه</h3>
+    <h3 class="h6 mb-3"><i class="fa-solid fa-circle-info text-primary me-1"></i> اطلاعات وظیفه</h3>
     <div class="row g-3">
         <div class="col-12 col-md-4">
             <label class="form-label">مشتری</label>
@@ -157,7 +157,7 @@ function render_passport_row($i, $p = NULL)
 
 <!-- Financials -->
 <div class="glass-card p-4 mb-3" data-aos="fade-up">
-    <h3 class="h6 mb-3"><i class="fa-solid fa-money-bill-wave text-primary ms-1"></i> مالی</h3>
+    <h3 class="h6 mb-3"><i class="fa-solid fa-money-bill-wave text-primary me-1"></i> مالی</h3>
     <div class="row g-3">
         <div class="col-6 col-md-3">
             <label class="form-label">مبلغ فیس (مشتری)</label>
@@ -195,8 +195,8 @@ function render_passport_row($i, $p = NULL)
 <!-- Passports -->
 <div class="glass-card p-4 mb-3" data-aos="fade-up">
     <div class="d-flex justify-content-between align-items-center mb-3">
-        <h3 class="h6 mb-0"><i class="fa-solid fa-passport text-primary ms-1"></i> پاسپورت‌ها (<span id="passport-count"><?= count($passports) ?></span>)</h3>
-        <button type="button" class="btn btn-sm btn-primary" id="add-passport-row"><i class="fa-solid fa-plus ms-1"></i> افزودن پاسپورت</button>
+        <h3 class="h6 mb-0"><i class="fa-solid fa-passport text-primary me-1"></i> پاسپورت‌ها (<span id="passport-count"><?= count($passports) ?></span>)</h3>
+        <button type="button" class="btn btn-sm btn-primary" id="add-passport-row"><i class="fa-solid fa-plus me-1"></i> افزودن پاسپورت</button>
     </div>
     <div id="passport-rows-container">
         <?php
@@ -217,7 +217,7 @@ function render_passport_row($i, $p = NULL)
 </template>
 
 <div class="d-flex gap-2 mb-5" data-aos="fade-up">
-    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk ms-1"></i> ذخیره وظیفه</button>
+    <button type="submit" class="btn btn-primary"><i class="fa-solid fa-floppy-disk me-1"></i> ذخیره وظیفه</button>
     <a href="<?= base_url('tasks') ?>" class="btn btn-glass">انصراف</a>
 </div>
 

@@ -25,7 +25,7 @@
         </div>
 
         <button type="submit" class="btn btn-primary w-100 py-2">
-            <i class="fa-solid fa-arrow-left-to-bracket ms-1"></i>
+            <i class="fa-solid fa-arrow-left-to-bracket me-1"></i>
             ورود
         </button>
     <?= form_close() ?>

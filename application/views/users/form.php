@@ -11,7 +11,7 @@ $current_active = $is_edit ? (int) $user->active : (int) set_value('active', 1);
 <div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-up">
     <h2 class="h4 mb-0"><?= $is_edit ? 'ویرایش کاربر' : 'افزودن کاربر' ?></h2>
     <a href="<?= base_url('users') ?>" class="btn btn-glass">
-        <i class="fa-solid fa-arrow-right ms-1"></i> بازگشت
+        <i class="fa-solid fa-arrow-right me-1"></i> بازگشت
     </a>
 </div>
 
@@ -82,7 +82,7 @@ $current_active = $is_edit ? (int) $user->active : (int) set_value('active', 1);
 
 <div class="mt-4 d-flex gap-2" data-aos="fade-up">
     <button type="submit" class="btn btn-primary">
-        <i class="fa-solid fa-floppy-disk ms-1"></i> ذخیره
+        <i class="fa-solid fa-floppy-disk me-1"></i> ذخیره
     </button>
     <a href="<?= base_url('users') ?>" class="btn btn-glass">انصراف</a>
 </div>

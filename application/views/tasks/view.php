@@ -31,8 +31,8 @@ function outstanding_block($due_amount, $due_currency, $paid_by_currency, $curre
         <p class="text-secondary mb-0 small"><?= jalali_date($task->date, 'l، j F Y') ?></p>
     </div>
     <div class="d-flex gap-2">
-        <a href="<?= base_url('tasks/edit/' . (int) $task->id) ?>" class="btn btn-glass"><i class="fa-solid fa-pen ms-1"></i> ویرایش</a>
-        <a href="<?= base_url('tasks') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right ms-1"></i> بازگشت</a>
+        <a href="<?= base_url('tasks/edit/' . (int) $task->id) ?>" class="btn btn-glass"><i class="fa-solid fa-pen me-1"></i> ویرایش</a>
+        <a href="<?= base_url('tasks') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right me-1"></i> بازگشت</a>
     </div>
 </div>
 
@@ -69,7 +69,7 @@ function outstanding_block($due_amount, $due_currency, $paid_by_currency, $curre
 
 <!-- Passports -->
 <div class="glass-card glass-table-wrap mb-3" data-aos="fade-up">
-    <div class="p-3 pb-0"><h3 class="h6 mb-0"><i class="fa-solid fa-passport text-primary ms-1"></i> پاسپورت‌ها (<?= count($passports) ?>)</h3></div>
+    <div class="p-3 pb-0"><h3 class="h6 mb-0"><i class="fa-solid fa-passport text-primary me-1"></i> پاسپورت‌ها (<?= count($passports) ?>)</h3></div>
     <table class="table glass-table align-middle" style="width:100%">
         <thead><tr><th>#</th><th>نام خانوادگی</th><th>نام</th><th>شماره</th><th>تولد</th><th>انقضا</th><th>جنسیت</th><th>اسکن</th></tr></thead>
         <tbody>
@@ -106,7 +106,7 @@ function outstanding_block($due_amount, $due_currency, $paid_by_currency, $curre
     foreach ($payment_blocks as $blk): ?>
         <div class="col-12 col-lg-6" data-aos="fade-up">
             <div class="glass-card p-4 h-100">
-                <h3 class="h6 mb-3"><i class="fa-solid <?= $blk['icon'] ?> text-primary ms-1"></i> <?= $blk['title'] ?></h3>
+                <h3 class="h6 mb-3"><i class="fa-solid <?= $blk['icon'] ?> text-primary me-1"></i> <?= $blk['title'] ?></h3>
 
                 <form class="row g-2 mb-3 payment-form" data-action="<?= base_url($blk['add']) ?>">
                     <div class="col-4"><input type="number" step="0.01" min="0" class="form-control form-control-sm num" name="amount" placeholder="مبلغ" required></div>

@@ -18,7 +18,7 @@ defined('BASEPATH') OR exit('No direct script access allowed');
         </div>
         <?= isset($extra_filter) ? $extra_filter : '' ?>
         <div class="col-6 col-md-2 d-grid">
-            <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-filter ms-1"></i> اعمال</button>
+            <button type="submit" class="btn btn-primary btn-sm"><i class="fa-solid fa-filter me-1"></i> اعمال</button>
         </div>
     </form>
 </div>

@@ -5,7 +5,7 @@ foreach ($rows as $r) { $total_tasks += (int) $r->task_count; $total_pass += (in
 ?>
 <div class="d-flex justify-content-between align-items-center mb-3" data-aos="fade-up">
     <h2 class="h4 mb-0">حجم پاسپورت / نوع ویزا</h2>
-    <a href="<?= base_url('reports') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right ms-1"></i> گزارشات</a>
+    <a href="<?= base_url('reports') ?>" class="btn btn-glass"><i class="fa-solid fa-arrow-right me-1"></i> گزارشات</a>
 </div>
 
 <?php $this->load->view('_partials/date_filter', array('date_from' => $date_from, 'date_to' => $date_to)); ?>

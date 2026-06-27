@@ -6,7 +6,7 @@
         <p class="text-secondary mb-0 small">مدیریت نقش‌های کاربری و سطوح دسترسی</p>
     </div>
     <a href="<?= base_url('roles/create') ?>" class="btn btn-primary">
-        <i class="fa-solid fa-plus ms-1"></i> افزودن نقش
+        <i class="fa-solid fa-plus me-1"></i> افزودن نقش
     </a>
 </div>
 
