@@ -51,6 +51,14 @@ class MY_Controller extends CI_Controller {
         // Make permission checks available to controllers + views.
         $this->load->library('permission');
         $this->permission->init($this->current_user);
+
+        // Report query cache invalidation (bulletproof): every mutation is a
+        // POST, so clearing the DB query cache at the start of any POST request
+        // guarantees the next read re-queries fresh data — keeping reports
+        // real-time while still benefiting from caching on GET reads.
+        if ($this->input->method() === 'post') {
+            $this->db->cache_delete_all();
+        }
     }
 
     // ------------------------------------------------------------------
@@ -114,11 +122,12 @@ class MY_Controller extends CI_Controller {
      */
     protected function json_response($payload, $status = 200)
     {
-        $this->output
-             ->set_status_header($status)
-             ->set_content_type('application/json', 'utf-8')
-             ->set_output(json_encode($payload));
-        // Stop further processing immediately.
+        // NOTE: we echo + exit rather than $this->output->set_output(), because
+        // exit; bypasses CI3's end-of-request output flush, which would send an
+        // empty body. set_status_header() and header() both emit immediately.
+        $this->output->set_status_header($status);
+        header('Content-Type: application/json; charset=utf-8');
+        echo json_encode($payload);
         exit;
     }
 

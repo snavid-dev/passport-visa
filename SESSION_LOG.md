@@ -1,10 +1,195 @@
 # Session Log
 
 ## Current Phase
-Phase 1 — Scaffold & Foundation ✅ COMPLETE
+Phase 6 — Polish & Hardening ✅ COMPLETE — ALL 6 PHASES DONE 🎉
 
 ## Last Completed Task
-✅ Phase 1 — full foundation built and verified live on https://passport-visa.cyborgtech.co
+✅ Phase 6 — security audit, indexing, report caching, regression — verified
+
+## What was done (Phase 6)
+- SECURITY AUDIT (all pass): no debug output, no raw superglobals, all user
+  output html_escape()'d, sensitive files (.env/.sql/.md/config/composer) → 403,
+  uploads → 403, all POST actions guarded.
+- CSRF FIX: csrf_cookie is HttpOnly (JS can't read it) + csrf_regenerate was TRUE
+  → AJAX retry/multi-submit would 403 in a real browser. Set csrf_regenerate=FALSE
+  (stable per-session token, still fully enforced); JS reads <meta csrf-hash>.
+  Verified two consecutive AJAX POSTs with same token succeed.
+- INDEXES: confirmed all required indexes exist; EXPLAIN balance sheet uses
+  idx_account_currency (ref, no filesort/scan).
+- REPORT CACHING: cache_on() in Balance_sheet + Reports controllers; bulletproof
+  invalidation via MY_Controller cache_delete_all() on ANY POST (even 422). Keeps
+  reports real-time. cachedir application/cache/db (777; non-web-accessible).
+- FULL REGRESSION (Protocol 5.6) all pass: login/session, AJAX CRUD, task+upload,
+  payments→4 ledger, auth-gated scan, balance sheet USD nets to 0.00, payment
+  reversal→2 left, CSRF in forms.
+- Responsive: viewport metas, breakpoints (992/575), mobile sidebar toggle,
+  table scroll wrappers (17 views), reduced-motion in CSS+JS.
+- php -l clean across the whole tree.
+
+## Known follow-ups (not blocking)
+- fileinfo: built + staged at /home/navid/fileinfo.so; run the 4 root cmds to
+  install (uploads work without it via getimagesize + magic bytes).
+- Visual 375px screenshot QA needs a real browser/device (structure is mobile-first
+  and complete).
+- Orphan upload files from direct-SQL test cleanup are owned by www (app-driven
+  task delete cleans files correctly).
+- Nothing pushed to GitHub remote yet (per user choice). git on dev branch.
+
+---
+
+## Phase 5 — Balance Sheet + 10 Reports ✅ COMPLETE (earlier)
+✅ balance sheet + 10 reports, verified live with sample data
+
+## What was built (Phase 5)
+- Report_model: balance_sheet (per-currency pivot), account_statement +
+  opening_balance, cash_position, income_expense, tasks_summary, profit (+
+  per-task), outstanding (UNION client/vendor), client_report, vendor_report,
+  volume. bcmath throughout; currencies never converted.
+- Balance_sheet controller (view_balance_sheet) + Reports controller
+  (view_reports) with one method per report + Jalali date-range filters.
+- Views: balance_sheet/index, reports hub + 10 report views,
+  reusable _partials/date_filter.php.
+
+## Login fixes (this session)
+- Login form vanish FIXED: card had both .glass-card and .auth-card, so
+  main.js ran two gsap.from() on it (2nd captured the zeroed opacity as its
+  end → animated 0→0). Scoped generic anim to `.app-content .glass-card`.
+- Added default credentials box on login page (admin / admin@1234).
+
+## fileinfo
+- Built fileinfo.so from PHP 7.4.33 source (verified loads), staged at
+  /home/navid/fileinfo.so. Needs 4 root cmds to install (copy to ext dir,
+  uncomment ;extension=fileinfo in php.ini, reload php-fpm-74). Uploads work
+  without it regardless.
+
+## Verified (Phase 5)
+- Seeded task (fee 3000 AFN / cost 2000 AFN, 2 passports), client pay 1000,
+  vendor pay 800, income receipt 500 USD, expense receipt 300 AFN
+- Balance sheet totals: AFN 300.00, USD -500.00 (exact)
+- All 10 reports + balance sheet load 200 with correct figures
+  (cash 200, profit 1000, outstanding 2000/1200, client 3000/1000,
+   vendor 2000/800, income/expense 500/300, volume توریستی=2)
+- php -l clean; CI log clean (only external bot 404s)
+- Test data cleaned → pristine (cash account + 1 service + admin)
+
+---
+
+## Phase 4 — Tasks (core feature) ✅ COMPLETE (earlier)
+✅ Tasks with passports, uploads, payments + ledger, verified live
+
+## What was built (Phase 4)
+- Task_model (filters + server-side pagination, joins, create/update,
+  delete with ledger reversal), Passport_model (row sync, scan paths),
+  Payment_model (client+vendor payments, transactional ledger posting per
+  Part 7, precise per-payment reversal).
+- Tasks controller (manage_tasks): index w/ filter bar + CI pagination,
+  create/store, edit/update, delete (+file cleanup), view, AJAX
+  add/delete client+vendor payments.
+- Uploads controller: auth-gated passport-scan serving (served via /scan/...).
+- upload_helper.php: content-based validation (getimagesize for images +
+  %PDF magic bytes — no fileinfo needed), GD resize to 1600px + JPEG 80%.
+- Views: tasks/index (filters), tasks/form (header + financial + dynamic
+  passport rows + per-row upload), tasks/view (passports, payment logs,
+  per-currency outstanding). task-form.js (dynamic rows, reindex, datepicker
+  re-init, GSAP, fee auto-calc), task-payments.js (AJAX payments).
+
+## Key fixes this phase
+- Scan serving URL must NOT collide with the physical /uploads path or Apache
+  serves it statically (then uploads/.htaccess denies). Route changed to
+  /scan/{task_id}/{file} → Uploads::passport (auth-checked).
+
+## Verified (Phase 4)
+- Task create (multipart) w/ passport + scan: dates 1404/04/15→2025-07-06,
+  dob 1370/05/10→1991-08-01; image resized 1800→1600px, compressed
+- Scan serving: 200 w/ session, 302→login without (auth gated)
+- Client payment 1000 AFN → 2 ledger rows (cash debit + client credit)
+- Vendor payment 800 AFN → 2 ledger rows (cash credit + vendor debit)
+- Balances: cash 200, client -1000, vendor 800 (all correct)
+- Payment delete → exact 2-row reversal; task delete → passports+payments+
+  ledger+scan-dir all removed
+- php -l clean; CI log clean (only external bot 404s)
+
+## ⚠️ Outstanding env item
+- fileinfo STILL not installed. Uploads work without it (getimagesize +
+  magic bytes), but enabling fileinfo is recommended hardening for Phase 6.
+
+---
+
+## Phase 3 — Core Data ✅ COMPLETE (earlier)
+✅ Accounts, Services, Receipts CRUD + ledger posting, verified live
+
+## What was built (Phase 3)
+- Account_model + Accounts controller (manage_accounts): AJAX modal CRUD,
+  cash-account + in-use delete guards. Views: index DataTable + modal.
+- Service_model + Services controller (manage_services): AJAX modal CRUD,
+  in-use delete guard, format_money display. Views: index + modal.
+- Ledger_model: post_entries (transactional batch), delete_by_source (reversal),
+  get_account_balance / get_account_balances (bcmath, per-currency).
+- Receipt_model: receipts = single ledger entries (source='receipt'),
+  debit/credit split, CRUD scoped to source='receipt'.
+- Receipts controller (manage_receipts): AJAX modal CRUD, Jalali↔Gregorian
+  date conversion, get() shapes row into form fields.
+- Reusable assets/js/crud-modal.js — generic AJAX create/edit modal
+  (used by accounts, services, receipts).
+- Jalali datepicker added to layout (@majidh1/jalalidatepicker, SRI pinned),
+  init in main.js (Western digits), inputs use [data-jdp].
+
+## Key fix this phase
+- MY_Controller::json_response() rewritten to echo+exit (CI3's
+  output->set_output() is dropped when you exit before the end-of-request
+  flush, so AJAX bodies were empty). Now all AJAX endpoints return real bodies.
+
+## Verified (Phase 3)
+- Accounts: AJAX create 200 {success:true}, edit get JSON, validation 422 (Persian),
+  cash delete-protected, in-use guard
+- Services: AJAX create persisted (fee 1500 AFN)
+- Receipts: create → ledger row (debit 5000 AFN, date 1404/04/02→2025-06-23 ✓),
+  balance 5000; update → credit 1200 USD (1404/05/10→2025-08-01 ✓);
+  delete → ledger reversed to 0
+- php -l clean on all files; CI log clean (no new errors)
+
+## Current seed/data state
+- accounts: 1 (صندوق نقدی / cash)
+- services: 1 (ویزای توریستی ایران, 1500 AFN) — kept as sample
+- ledger: 0 · users: 1 (admin) · roles: 1 (مدیر کل)
+
+---
+
+## Phase 2 — Auth + Users + Roles ✅ COMPLETE (earlier)
+✅ Users + Roles CRUD with RBAC, verified live
+
+## What was built (Phase 2)
+- Role_model: get_all (w/ permission_count + user_count subqueries, no N+1),
+  get_by_id, get_permission_ids, get_all_permissions, create/update with atomic
+  permission sync (trans), delete, is_in_use guard, name_exists
+- Roles controller (gated manage_roles): index/create/store/edit/update/delete,
+  validation, name-unique + in-use delete guard
+- Roles views: index (DataTable + delete guard for in-use roles),
+  form (permission checkbox grid + select-all toggle)
+- User_model extended: get_all (role join), get_by_id, create (bcrypt hash),
+  update (re-hash only if pw provided), delete, username_exists, count_active
+- Users controller (gated manage_users): full CRUD, self-delete + self-deactivate
+  guards, username-unique guard, password optional on edit
+- Users views: index (DataTable, status badges, self-row protected),
+  form (role select2, active switch, pw hint on edit)
+- Persian validation language override:
+  application/language/english/form_validation_lang.php (UI stays Persian-only)
+
+## Verified (Phase 2)
+- Auth guard: /users unauthed → 302 login
+- Permission guard: operator (no manage_users/roles) → 403 on /users & /roles, 200 dashboard
+- Sidebar hides admin section for users lacking the perms
+- Role create (happy path) → row + permissions persisted
+- User create (happy path) → bcrypt-hashed row persisted
+- Validation failure → form re-renders with PERSIAN errors, no DB write
+- Self-delete blocked (admin id=1 survives)
+- php -l clean on all new files; CI log clean (no new errors)
+- Test data cleaned up → back to 1 user (admin) + 1 role (مدیر کل)
+
+---
+
+## Phase 1 — Scaffold & Foundation ✅ COMPLETE (earlier)
+✅ full foundation built and verified live on https://passport-visa.cyborgtech.co
 
 ## What was built (Phase 1)
 - CodeIgniter 3.1.13 installed (system/, application/, index.php)
@@ -53,11 +238,11 @@ Phase 1 — Scaffold & Foundation ✅ COMPLETE
 - Web user is `www`; project owned navid:www, setgid, group-writable.
 
 ## Next Up
-Phase 2 — Auth + Users + Roles
-- Task #11 Auth: harden (already functional), add "remember"/password change
-- Task #12 Users CRUD + User_model (full)
-- Task #13 Roles CRUD + Role_model + assign permissions
-- Task #14 Permission-aware nav (sidebar already wired)
+All 6 build-order phases complete. Optional remaining work:
+- Push dev → GitHub remote (awaiting user go-ahead)
+- Install fileinfo (root cmds), then optional finfo cross-check in upload_helper
+- Manual visual QA at 375px/390px in a real browser + screenshots for PRs
+- dev → prod promotion per github_workflow.md when ready
 
 ## Environment
 - PHP: 7.4.33 (php-fpm as www; CLI separate ini)
